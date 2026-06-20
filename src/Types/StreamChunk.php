@@ -8,6 +8,7 @@ class StreamChunk
         public readonly string $delta,
         public readonly ?string $finishReason = null,
         public readonly ?string $error = null,
+        public readonly ?array $toolCalls = null,
     ) {}
 
     public static function fromArray(array $data): self
@@ -16,6 +17,7 @@ class StreamChunk
             delta: $data['delta'] ?? '',
             finishReason: $data['finish_reason'] ?? null,
             error: $data['error'] ?? null,
+            toolCalls: $data['toolCalls'] ?? null,
         );
     }
 }

@@ -1,9 +1,21 @@
 {
     "name": "cencori/cencori-php",
-    "description": "Official PHP SDK for Cencori - AI Infrastructure for Production",
+    "description": "Official PHP SDK for Cencori v1.2.1 - AI Infrastructure for Production. AI Gateway, Agents, Memory, Compute, Workflow, Storage.",
     "type": "library",
     "license": "MIT",
-    "keywords": ["ai", "llm", "openai", "anthropic", "gemini", "api", "gateway", "infrastructure"],
+    "keywords": [
+        "ai",
+        "llm",
+        "openai",
+        "anthropic",
+        "gemini",
+        "api",
+        "gateway",
+        "infrastructure",
+        "agents",
+        "memory",
+        "rag"
+    ],
     "require": {
         "php": ">=8.1",
         "guzzlehttp/guzzle": "^7.0",
@@ -31,7 +43,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-main": "0.1.x-dev"
+            "dev-main": "1.2.x-dev"
         }
     }
 }
