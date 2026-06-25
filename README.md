@@ -236,6 +236,49 @@ $memories = $cencori->memory->storeBatch('conversations', [
 $result = $cencori->memory->deleteByFilter('conversations', ['userId' => 'user_123']);
 ```
 
+## Sessions Module
+
+Durable execution sessions for AI agents — pause/resume execution, event sourcing, and human-in-the-loop approval workflows.
+
+```php
+// Create a session
+$session = $cencori->sessions->create([
+    'agent_id' => 'ag_...',
+]);
+
+// List sessions
+$sessions = $cencori->sessions->list(['status' => 'active']);
+
+// Get a session by ID
+$session = $cencori->sessions->get('sess_123');
+
+// Submit a turn
+$turn = $cencori->sessions->submitTurn('sess_123', [
+    'input' => 'What is the weather in San Francisco?',
+]);
+
+// Get session events
+$events = $cencori->sessions->getEvents('sess_123', [
+    'turn_number' => 1,
+]);
+
+// Approve a pending action
+$cencori->sessions->approve('sess_123', [
+    'action_id' => 'act_...',
+    'tool_results' => [
+        ['name' => 'get_weather', 'result' => 'Sunny, 72°F'],
+    ],
+]);
+
+// Reject a pending action
+$cencori->sessions->reject('sess_123', [
+    'action_id' => 'act_...',
+]);
+
+// Delete a session
+$cencori->sessions->delete('sess_123');
+```
+
 ## Telemetry Module
 
 Report web traffic from your application to the Cencori dashboard.
