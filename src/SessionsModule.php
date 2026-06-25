@@ -2,6 +2,8 @@
 
 namespace Cencori;
 
+use Psr\Http\Message\ResponseInterface;
+
 /**
  * Sessions module for managing durable execution sessions for AI agents.
  *
@@ -12,8 +14,12 @@ namespace Cencori;
  * // Create a session
  * $session = $cencori->sessions->create(['agent_id' => 'ag_...']);
  *
- * // Submit a turn
- * $cencori->sessions->submitTurn($session['id'], ['input' => 'Hello!']);
+ * // Submit a turn (returns raw Response for SSE streaming)
+ * $response = $cencori->sessions->submitTurn($session['id'], ['input' => 'Hello!']);
+ * $body = $response->getBody();
+ * while (!$body->eof()) {
+ *     echo $body->read(1024);
+ * }
  *
  * // List active sessions
  * $sessions = $cencori->sessions->list(['status' => 'active']);
@@ -100,8 +106,8 @@ class SessionsModule
     /**
      * Submit a turn in a session.
      *
-     * For streaming, pass 'stream' => true in params and handle
-     * the raw response via buildRequestOptions().
+     * The response is a Server-Sent Events (SSE) stream.
+     * Returns the raw PSR-7 ResponseInterface for streaming consumption.
      *
      * @param string $sessionId The session ID
      * @param array $params Turn parameters:
@@ -116,17 +122,14 @@ class SessionsModule
      *   - response_format: ?array
      *   - user: ?string
      *   - pause_on_tool_calls: ?bool
-     * @return array Turn response data
+     * @return ResponseInterface Raw HTTP response with SSE stream
      */
-    public function submitTurn(string $sessionId, array $params): array
+    public function submitTurn(string $sessionId, array $params): ResponseInterface
     {
         $build = $this->client->buildRequestOptions('POST', $params);
         $url = $this->client->getBaseUrl() . "/v1/sessions/{$sessionId}/turns";
 
-        $response = $this->client->getHttpClient()->request('POST', $url, $build['options']);
-
-        $body = (string) $response->getBody();
-        return json_decode($body, true) ?? [];
+        return $this->client->getHttpClient()->request('POST', $url, $build['options']);
     }
 
     /**
@@ -164,21 +167,21 @@ class SessionsModule
     /**
      * Approve a pending action in a session.
      *
+     * Returns a Server-Sent Events (SSE) stream with the resumed turn's events.
+     * Returns the raw PSR-7 ResponseInterface for streaming consumption.
+     *
      * @param string $sessionId The session ID
      * @param array $params Approval parameters:
      *   - action_id: string (required)
      *   - tool_results: ?array
-     * @return array Response data
+     * @return ResponseInterface Raw HTTP response with SSE stream
      */
-    public function approve(string $sessionId, array $params): array
+    public function approve(string $sessionId, array $params): ResponseInterface
     {
         $build = $this->client->buildRequestOptions('POST', $params);
         $url = $this->client->getBaseUrl() . "/v1/sessions/{$sessionId}/approve";
 
-        $response = $this->client->getHttpClient()->request('POST', $url, $build['options']);
-
-        $body = (string) $response->getBody();
-        return json_decode($body, true) ?? [];
+        return $this->client->getHttpClient()->request('POST', $url, $build['options']);
     }
 
     /**

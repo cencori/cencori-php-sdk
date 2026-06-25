@@ -252,28 +252,34 @@ $sessions = $cencori->sessions->list(['status' => 'active']);
 // Get a session by ID
 $session = $cencori->sessions->get('sess_123');
 
-// Submit a turn
-$turn = $cencori->sessions->submitTurn('sess_123', [
+// Submit a turn (returns SSE stream)
+$response = $cencori->sessions->submitTurn('sess_123', [
     'input' => 'What is the weather in San Francisco?',
+    'pause_on_tool_calls' => true,
 ]);
+$body = $response->getBody();
+while (!$body->eof()) {
+    echo $body->read(1024);
+}
 
 // Get session events
 $events = $cencori->sessions->getEvents('sess_123', [
     'turn_number' => 1,
 ]);
 
-// Approve a pending action
-$cencori->sessions->approve('sess_123', [
+// Approve a pending action (returns SSE stream)
+$response = $cencori->sessions->approve('sess_123', [
     'action_id' => 'act_...',
     'tool_results' => [
-        ['name' => 'get_weather', 'result' => 'Sunny, 72°F'],
+        ['action_id' => 'act_...', 'output' => '{"temperature": 72}'],
     ],
 ]);
 
 // Reject a pending action
-$cencori->sessions->reject('sess_123', [
+$result = $cencori->sessions->reject('sess_123', [
     'action_id' => 'act_...',
 ]);
+echo $result['resolution']; // "rejected"
 
 // Delete a session
 $cencori->sessions->delete('sess_123');
