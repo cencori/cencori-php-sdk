@@ -47,6 +47,9 @@ class Cencori
     /** Telemetry module for reporting web traffic. */
     public TelemetryModule $telemetry;
 
+    /** Sessions module for durable execution and pause/resume workflows. */
+    public SessionsModule $sessions;
+
     /** Projects module for managing Cencori projects. */
     public ProjectsModule $projects;
 
@@ -103,6 +106,7 @@ class Cencori
         $this->agents = new AgentsModule($this);
         $this->memory = new MemoryModule($this);
         $this->telemetry = new TelemetryModule($this);
+        $this->sessions = new SessionsModule($this);
         $this->projects = new ProjectsModule($this);
         $this->apiKeys = new APIKeysModule($this);
         $this->metrics = new MetricsModule($this);
