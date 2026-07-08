@@ -1,4 +1,4 @@
-# Cencori PHP SDK v1.2.1
+# Cencori PHP SDK v1.3.0
 
 Official PHP SDK for Cencori - AI Infrastructure for Production.
 
@@ -94,6 +94,30 @@ $result = $cencori->ai->generateObject(
 );
 print_r($result['object']); // ['name' => 'John', 'age' => 30]
 ```
+
+### Vision (Image Understanding)
+
+Analyze, describe, OCR, and classify images. Routes across OpenAI, Anthropic, and Google.
+
+```php
+// General analysis with a custom prompt
+$result = $cencori->vision->analyze([
+    'image_url' => 'https://example.com/photo.jpg',
+    'prompt' => 'What breed of dog is this?',
+]);
+echo $result['analysis'];
+
+// OCR from a local file
+$b64 = base64_encode(file_get_contents('receipt.png'));
+$ocr = $cencori->vision->ocr(['image_base64' => $b64, 'mime_type' => 'image/png']);
+echo $ocr['text'];
+
+// Structured classification
+$c = $cencori->vision->classify(['image_url' => 'https://example.com/product.jpg']);
+// $c['classification'] is an array when the model returns valid JSON
+```
+
+Full API in [docs](https://cencori.com/docs/ai/endpoints/vision).
 
 ### Image Generation
 
