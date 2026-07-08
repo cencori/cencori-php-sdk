@@ -90,15 +90,18 @@ class VisionModule
     {
         $imageUrl = $params['image_url'] ?? null;
         $imageBase64 = $params['image_base64'] ?? null;
+        $images = $params['images'] ?? null;
 
-        if (!$imageUrl && !$imageBase64) {
+        if (!$imageUrl && !$imageBase64 && (!is_array($images) || count($images) === 0)) {
             throw new \InvalidArgumentException(
-                'vision request requires image_url or image_base64'
+                'vision request requires image_url, image_base64, or images'
             );
         }
 
         $body = [];
-        if ($imageUrl) {
+        if (is_array($images) && count($images) > 0) {
+            $body['images'] = $images;
+        } elseif ($imageUrl) {
             $body['image_url'] = $imageUrl;
         } else {
             $body['image_base64'] = $imageBase64;

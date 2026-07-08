@@ -14,7 +14,7 @@ use Cencori\Errors\{
 };
 
 /**
- * Cencori SDK client v1.3.0
+ * Cencori SDK client v1.4.0
  *
  * One SDK for AI Gateway, Agents, Memory, Compute, Workflow, and Storage.
  * Every operation is secured, logged, and tracked.
@@ -40,6 +40,9 @@ class Cencori
 
     /** Vision module for analyze / describe / OCR / classify on images. */
     public VisionModule $vision;
+
+    /** Documents module for extract / summarize / query on PDFs and images. */
+    public DocumentsModule $documents;
 
     /** Agents module for creating and managing AI agents. */
     public AgentsModule $agents;
@@ -107,6 +110,7 @@ class Cencori
 
         $this->ai = new AIModule($this);
         $this->vision = new VisionModule($this);
+        $this->documents = new DocumentsModule($this);
         $this->agents = new AgentsModule($this);
         $this->memory = new MemoryModule($this);
         $this->telemetry = new TelemetryModule($this);
