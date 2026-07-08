@@ -119,6 +119,33 @@ $c = $cencori->vision->classify(['image_url' => 'https://example.com/product.jpg
 
 Full API in [docs](https://cencori.com/docs/ai/endpoints/vision).
 
+### Documents (PDF & Image Extraction)
+
+Extract text from PDFs and images, summarize, and answer questions. Text-based PDFs use native parsing — no LLM tokens.
+
+```php
+// Extract text (native PDF parse — free)
+$result = $cencori->documents->extract([
+    'document_url' => 'https://example.com/contract.pdf',
+]);
+echo $result['method']; // 'pdf_text' — no LLM cost
+
+// Summarize
+$summary = $cencori->documents->summarize([
+    'document_url' => 'https://example.com/report.pdf',
+]);
+echo $summary['summary'];
+
+// Q&A — strict "Not found" if answer isn't present
+$answer = $cencori->documents->query([
+    'document_url' => 'https://example.com/contract.pdf',
+    'question' => 'What is the termination clause?',
+]);
+echo $answer['answer'];
+```
+
+Full API in [docs](https://cencori.com/docs/ai/endpoints/documents).
+
 ### Image Generation
 
 ```php
