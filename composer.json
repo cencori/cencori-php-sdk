@@ -1,6 +1,6 @@
 {
     "name": "cencori/cencori-php",
-    "description": "Official PHP SDK for Cencori v1.2.1 - AI Infrastructure for Production. AI Gateway, Agents, Memory, Compute, Workflow, Storage.",
+    "description": "Official PHP SDK for Cencori v1.3.0 - AI Infrastructure for Production. AI Gateway, Vision, Agents, Memory, Compute, Workflow, Storage.",
     "type": "library",
     "license": "MIT",
     "keywords": [
