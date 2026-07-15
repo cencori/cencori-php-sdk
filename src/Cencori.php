@@ -41,6 +41,8 @@ class Cencori
     /** Vision module for analyze / describe / OCR / classify on images. */
     public VisionModule $vision;
 
+    public VoiceModule $voice;
+
     /** Documents module for extract / summarize / query on PDFs and images. */
     public DocumentsModule $documents;
 
@@ -110,6 +112,7 @@ class Cencori
 
         $this->ai = new AIModule($this);
         $this->vision = new VisionModule($this);
+        $this->voice = new VoiceModule($this);
         $this->documents = new DocumentsModule($this);
         $this->agents = new AgentsModule($this);
         $this->memory = new MemoryModule($this);

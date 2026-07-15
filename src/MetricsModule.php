@@ -24,7 +24,7 @@ class MetricsModule
      */
     public function get(string $period): MetricsResponse
     {
-        $path = "/api/v1/metrics/{$period}";
+        $path = '/v1/metrics?period=' . rawurlencode($period);
         $data = $this->client->request($path, 'GET');
         return MetricsResponse::fromArray($data);
     }
