@@ -3,6 +3,8 @@
     "description": "Official PHP SDK for Cencori v1.4.0 - AI Infrastructure for Production. AI Gateway, Vision, Documents, Agents, Memory, Compute, Workflow, Storage.",
     "type": "library",
     "license": "MIT",
+    "homepage": "https://cencori.com",
+    "readme": "README.md",
     "keywords": [
         "ai",
         "llm",
@@ -41,9 +43,16 @@
             "email": "support@cencori.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/cencori/cencori-php-sdk/issues",
+        "source": "https://github.com/cencori/cencori-php-sdk",
+        "docs": "https://cencori.com/docs"
+    },
     "extra": {
         "branch-alias": {
-            "dev-main": "1.2.x-dev"
+            "dev-main": "1.4.x-dev"
         }
-    }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
