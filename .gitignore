@@ -4,10 +4,10 @@ composer.lock
 
 # IDE
 .idea/
-.vscode/
 *.swp
 *.swo
 
+temp_auto_push.bat
 # OS
 .DS_Store
 Thumbs.db
@@ -17,3 +17,5 @@ Thumbs.db
 .php_cs.cache
 coverage/
 .phpunit.cache/
+.gitignore
+branch_structure.json
